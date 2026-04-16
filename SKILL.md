@@ -6,6 +6,7 @@ description: |
   NOT for general Q&A; NOT when other skills already cover the analysis.
   NOTE: `references/` subdirectory is a development-time resource and is NOT loaded at runtime.
   All essential operational content must be in this file (SKILL.md).
+---
 
 # super-questioning
 
