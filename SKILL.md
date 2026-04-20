@@ -10,7 +10,7 @@ description: |
 
 # super-questioning
 
-**元数据**：version=5.6.0 | author=exomind-team | tags=[questioning, requirement-analysis, socratic-method, ye-xiu, tang-zhi] | trigger_mode=on-demand | idempotent=true | sessionful=true
+**元数据**：version=5.7.0 | author=exomind-team | tags=[questioning, requirement-analysis, socratic-method, ye-xiu, tang-zhi] | trigger_mode=on-demand | idempotent=true | sessionful=true
 
 > **核心原则（skill 存在的依据）**：
 > ① 降低用户认知负荷与行动阻力；② 提问覆盖遵循金字塔原理（MECE）；
@@ -41,8 +41,17 @@ description: |
 
 常见的交互式提问工具**包括但不限于**：
 
+- `popup-ask`（用户在当前会话显式激活该 skill 时优先使用；非强依赖）
 - `AskUserQuestion`（Claude Code为主）
 - `request_user_input`（Codex为主）
+
+**工具优先级纪律**：
+
+1. 若用户已在当前会话显式激活 `popup-ask` 且环境可用，优先使用 `popup-ask`
+2. 若未激活 `popup-ask`，继续使用宿主原生 ask 工具
+3. `popup-ask` 不可用时，回退到宿主原生 ask 工具
+4. 是否应该提问，仍跟宿主原有 ask 行为走；`popup-ask` 只替换 transport，不扩展提问时机
+5. 两者都不可用时，必须在纯文本回复末尾说明原因
 
 且建议一次分析一整个方面、草拟多个问题后再提问。
 
@@ -78,7 +87,7 @@ description: |
 八维度覆盖状态分析（输出报告）
     │
     ▼
-批次提问（≤3问/批，使用AskUserQuestion）
+批次提问（≤3问/批，使用合规交互式提问工具）
     │
     ▼
 计划更新说明
@@ -280,15 +289,19 @@ D7 逐层追问（D7-A）可随时嵌入三轮之中——当用户回答具体�
 
 ## 交互式提问规范（硬性要求）
 
-**强制使用 AskUserQuestion 工具，禁止纯文本输出多个编号问题。**
+**强制使用合规的交互式提问工具，禁止纯文本输出多个编号问题。**
 
 ```
 Agent文本输出问题 → 用户挨个区分编号 → 认知负荷高
-Agent AskUserQuestion → 用户统一界面选择 → 认知负荷低
+Agent 结构化提问工具 → 用户统一界面选择 → 认知负荷低
 ```
 
-- 每批 ≤ 3个问题，打包为一次 AskUserQuestion 调用
-- 使用 multiSelect 模式，一次性呈现多个选项
+- 若当前会话已显式激活 `popup-ask` 且环境可用，优先使用 `popup-ask`
+- 否则使用宿主原生 ask 工具（如 `AskUserQuestion` / `request_user_input`）
+- `popup-ask` 是可选下游能力，不是 `super-questioning` 的强依赖
+- 是否应该提问，仍跟宿主原有 ask 行为走；`popup-ask` 只替换 transport，不扩展提问权限
+- 每批 ≤ 3 个问题，尽量打包为一次结构化提问调用
+- 使用带选项的结构化问题；若走 `popup-ask`，遵循其 `2-5` 个预设选项、恒定 `Other`、恒定 `notes` 规则
 
 **选项边界处理**：用户回答超出预设选项时，不拒绝，顺着用户的内容继续追问，同时记录新的维度状态。不要强制引导回选项列表。
 
@@ -338,7 +351,10 @@ D7追问场景补充：
 
 ```
 ❌ 不输出维度覆盖状态报告就直接开始提问
-❌ **有交互式提问工具（如AskUserQuestion）时，绕开用户选择直接以文本方式呈现多个选项并讨论——super-questioning激活期间，需要用户做选择时必须用交互式提问工具**；意图不明时先问「你想讨论哪个方向」，不自行决定讨论顺序
+❌ **有合规的交互式提问工具时，绕开用户选择直接以文本方式呈现多个选项并讨论——super-questioning激活期间，需要用户做选择时必须用交互式提问工具**；意图不明时先问「你想讨论哪个方向」，不自行决定讨论顺序
+❌ 用户未显式激活 `popup-ask` 时，擅自用它替代宿主原生 ask
+❌ 把 `popup-ask` 当成默认自动接管宿主 ask 的通道——只有用户点名激活后，它才成为优先工具
+❌ 用 `popup-ask` 创造宿主原本不允许的提问时机——它只替换工具，不扩展提问权限
 ❌ 不做问题质量预诊就进入维度追问
 ❌ 复用上一次维度状态但不验证是否仍然有效
 ❌ 在用户已明确回答过某维度后重复提问
@@ -365,7 +381,7 @@ D7追问场景补充：
 - [ ] 是否输出了「维度覆盖状态报告」，而非直接开始追问？
 - [ ] 是否进行了「问题质量预诊」？是否需要问题转化？
 - [ ] 提问数量是否控制在每批 ≤ 3 个，总计 ≤ 8 个？
-- [ ] 是否使用 AskUserQuestion 工具进行交互式提问？
+- [ ] 是否使用了合规的交互式提问工具？若用户已显式激活 `popup-ask`，是否优先使用了它？
 - [ ] 每次提问后是否输出了「计划更新说明」？
 - [ ] 是否在收敛确认时询问用户「还有没问到的？」
 - [ ] 「够了，直接做」时是否立即停止并输出当前计划？
