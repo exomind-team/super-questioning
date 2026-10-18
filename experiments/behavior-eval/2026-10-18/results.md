@@ -8,13 +8,13 @@ The corrected blind scorer reported these descriptive totals after the masked la
 |---|---:|---:|---:|
 | Same-message authorization | 5/7 | 7/7 | 5/7 |
 | Evidence and counterargument | 7/10 | 10/10 | 9/10 |
-| Creative dissatisfaction, no reference | 7/10 | 10/10 | 7/10 |
+| Creative dissatisfaction, no reference | 7/10 | 10/10 | 10/10 |
 | Vague goal and redefinition | 7/10 | 10/10 | 10/10 |
 | Bounded mature decision | 7/7 | 7/7 | 6/7 |
 | Skip, delegation, and stop | 7/10 | 10/10 | 10/10 |
 | **Total** | **40/54** | **54/54** | **50/54** |
 
-These numbers are weak evidence for comparing 0.6.0 with 0.6.1: only three runs were conducted per version per scenario, the rubric is qualitative, and one 0.6.1 run had an avoidable tool/path-reporting issue. They do not establish that 0.6.0 is better. Both experimental versions were usually more concise and more focused than v5.7.0 in discovery cases, while v5.7.0 repeatedly surfaced D1–D8 coverage and progress status.
+Trial-count audit: the pilot had 18 sessions total—one run for each version × scenario cell, so three runs per scenario across all versions, not three runs per version per scenario. The corrected 0.6.1 sum is 5+9+10+10+6+10=50/54; the creative-case entry is 10/10 in the corrected blind scoring pass (the previous 7/10 entry was stale). These are qualitative scores from one run per cell and are weak evidence for comparing 0.6.0 with 0.6.1. They do not establish that 0.6.0 is better. Both experimental versions were usually more concise and more focused than v5.7.0 in discovery cases, while v5.7.0 repeatedly surfaced D1–D8 coverage and progress status.
 
 ## Behavioral observations
 

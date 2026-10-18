@@ -4,6 +4,6 @@ This branch contains a redacted record of an 18-session Luna xhigh behavior pilo
 
 The Skill branches used for the pilot were pinned and left unchanged. This handoff branch is based on 0.6.1 and adds reports only; it does not change `SKILL.md`. No ZIP is needed.
 
-Start with [results.md](results.md), then read [pending-items.md](pending-items.md) and [protocol.md](protocol.md). Version identities for blinded labels are in [version-map.md](version-map.md).
+Start with [results.md](results.md), then read [next-round-plan.md](next-round-plan.md), [pending-items.md](pending-items.md), and [protocol.md](protocol.md). Version identities for blinded labels are in [version-map.md](version-map.md).
 
 The scores are descriptive pilot results, not statistical evidence of superiority. The strongest finding is that both experimental versions generally produced more focused problem discovery than the 8-dimension report workflow. No 0.6.2 revision is proposed yet; the observed cross-skill activations and action-reporting mismatch need targeted confirmation first.

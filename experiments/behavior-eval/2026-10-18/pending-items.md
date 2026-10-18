@@ -8,7 +8,7 @@
 
 ## Method improvements
 
-- Increase repetitions beyond n=3 per case/version and randomize trial order, while retaining fresh-context Luna xhigh runs.
+- Increase repetitions from n=1 to at least n=3 per version × scenario cell (54 runs across three versions and six scenarios), and randomize trial order while retaining fresh-context Luna xhigh runs.
 - Save full anonymized transcripts for scoring instead of reconstructed summaries. Keep the scorer blind to the mapping and hypotheses.
 - Add a human-participant round to see whether the problem redefinition is useful to the person, not just coherent to a scorer reading a transcript.
 - Keep route-number accuracy secondary. The primary outcome remains a concrete, evidence-grounded change in the user’s problem understanding after several turns.
